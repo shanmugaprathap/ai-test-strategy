@@ -1,46 +1,81 @@
 # AI Test Strategy Guide
 
-A comprehensive guide to integrating AI/ML into your test automation strategy.
+**A Practitioner's Guide to AI-Powered Test Automation**
+
+> Built from 20 years of QA engineering leadership &mdash; leading teams, architecting frameworks, and navigating the shift from manual testing to AI-augmented quality engineering. This guide distills real-world lessons into actionable strategies for integrating AI/ML into your test automation practice.
+
+---
+
+## How to Use This Guide
+
+This is not a theoretical overview. Each section is structured around a specific AI capability you can adopt today, with working code examples, tool comparisons, and implementation checklists.
+
+**If you're just starting out**, begin with [AI Test Data Generation](#ai-test-data-generation) &mdash; it delivers immediate value with low risk. Then progress to [Self-Healing Locators](#self-healing-locators) to reduce maintenance overhead. The [Maturity Model](#ai-testing-maturity-model) below helps you assess where your team stands and what to tackle next.
+
+**If you're already using AI in testing**, jump to [Predictive Test Selection](#predictive-test-selection), [Visual AI Testing](#visual-ai-testing), or the [Implementation Examples](#implementation-examples) for patterns you can adapt to your codebase.
+
+---
 
 ## Table of Contents
 
 - [Overview](#overview)
+  - [AI Testing Maturity Model](#ai-testing-maturity-model)
 - [AI in Test Case Generation](#ai-in-test-case-generation)
+  - [Prompt Engineering for Test Cases](#prompt-engineering-for-test-cases)
+  - [AI Test Generation Tools](#ai-test-generation-tools)
 - [AI Test Data Generation](#ai-test-data-generation)
+  - [Traditional vs AI-Powered Approaches](#traditional-vs-ai-powered-data-generation)
+  - [Using LLMs for Test Data](#using-llms-for-test-data)
+  - [Synthetic Data for Privacy Compliance](#synthetic-data-for-privacy-compliance)
 - [Self-Healing Locators](#self-healing-locators)
+  - [Healenium Integration](#1-healenium-integration)
+  - [Custom AI Locator Strategy](#2-custom-ai-locator-strategy)
+  - [Multi-Attribute Resilience](#3-multi-attribute-locator)
 - [Visual AI Testing](#visual-ai-testing)
+  - [Applitools Integration](#applitools-integration)
+  - [Percy Integration](#percy-browserstack-integration)
 - [AI-Powered Test Maintenance](#ai-powered-test-maintenance)
+  - [Automatic Test Repair](#automatic-test-repair)
+  - [Flaky Test Detection](#flaky-test-detection)
 - [Predictive Test Selection](#predictive-test-selection)
+  - [ML-Based Test Prioritization](#ml-based-test-prioritization)
 - [Tools and Frameworks](#tools-and-frameworks)
 - [Implementation Examples](#implementation-examples)
 - [Best Practices](#best-practices)
+- [Getting Started Checklist](#getting-started-checklist)
+- [Deep-Dive Guides](#deep-dive-guides)
+- [Resources](#resources)
 
 ---
 
 ## Overview
 
 AI is transforming test automation by:
-- **Reducing maintenance** - Self-healing tests adapt to UI changes
-- **Improving coverage** - AI identifies edge cases humans miss
-- **Accelerating execution** - Smart test selection runs only relevant tests
-- **Enhancing data** - Synthetic data generation for comprehensive testing
+- **Reducing maintenance** &mdash; Self-healing tests adapt to UI changes automatically
+- **Improving coverage** &mdash; AI identifies edge cases humans miss
+- **Accelerating execution** &mdash; Smart test selection runs only relevant tests
+- **Enhancing data** &mdash; Synthetic data generation for comprehensive testing
 
 ### AI Testing Maturity Model
 
-| Level | Description | Capabilities |
-|-------|-------------|--------------|
-| **Level 1** | AI-Assisted | LLM for test case ideas, code suggestions |
-| **Level 2** | AI-Augmented | Self-healing locators, smart waits |
-| **Level 3** | AI-Driven | Autonomous test generation, predictive analytics |
-| **Level 4** | AI-Native | Fully autonomous testing with minimal human input |
+Use this model to assess where your team is today and plan your next step.
+
+| Level | Stage | Capabilities | Typical Effort |
+|-------|-------|--------------|----------------|
+| **Level 1** | AI-Assisted | LLM for test case ideas, code suggestions, review | Days to adopt |
+| **Level 2** | AI-Augmented | Self-healing locators, smart waits, AI data generation | Weeks to integrate |
+| **Level 3** | AI-Driven | Autonomous test generation, predictive analytics, visual AI | Months to mature |
+| **Level 4** | AI-Native | Fully autonomous testing with minimal human input | Long-term evolution |
+
+Most teams should target **Level 2** as their first milestone &mdash; it delivers measurable ROI (reduced flakiness, faster data setup) without requiring ML infrastructure.
 
 ---
 
 ## AI in Test Case Generation
 
-### Using LLMs for Test Scenarios
+> **Section summary:** Use LLMs to generate comprehensive test scenarios from requirements or UI descriptions. Best for exploratory coverage analysis and catching edge cases your team might overlook.
 
-#### Prompt Engineering for Test Cases
+### Prompt Engineering for Test Cases
 
 ```
 Prompt: "Generate test cases for a login page with:
@@ -108,13 +143,15 @@ public class AIGeneratedLoginTests extends BaseTest {
 
 ## AI Test Data Generation
 
+> **Section summary:** Replace hardcoded test data and basic Faker libraries with LLM-powered generation. Produces context-aware data, handles edge cases, and generates privacy-compliant synthetic records.
+
 ### Traditional vs AI-Powered Data Generation
 
 | Approach | Pros | Cons |
 |----------|------|------|
-| **Static Files** | Simple, predictable | Limited variety, maintenance |
+| **Static Files** | Simple, predictable | Limited variety, maintenance burden |
 | **Faker Libraries** | Good variety, fast | Rule-based, misses edge cases |
-| **AI-Generated** | Context-aware, edge cases | API costs, slower |
+| **AI-Generated** | Context-aware, edge cases, multilingual | API costs, slower |
 
 ### Using LLMs for Test Data
 
@@ -156,7 +193,6 @@ public class AITestDataGenerator {
 
     // Examples of AI-generated edge case emails:
     // - user+tag@sub.domain.co.uk
-    // - 用户@例え.jp
     // - very.long.email.address.exceeding.normal.length@subdomain.example.com
 }
 ```
@@ -191,6 +227,8 @@ public class PrivacyCompliantDataGenerator {
 ---
 
 ## Self-Healing Locators
+
+> **Section summary:** The #1 source of test maintenance is broken locators. Self-healing strategies automatically recover from DOM changes, cutting maintenance by 40-60% in practice. See the [deep-dive guide](docs/SELF_HEALING_LOCATORS.md) for advanced patterns.
 
 ### The Problem
 
@@ -312,6 +350,8 @@ public class ResilientLocator {
 
 ## Visual AI Testing
 
+> **Section summary:** Visual regression testing catches layout breaks, missing elements, and styling changes that functional tests miss. AI-based tools (Applitools, Percy) intelligently ignore irrelevant differences like anti-aliasing or dynamic content.
+
 ### Applitools Integration
 
 ```xml
@@ -383,6 +423,8 @@ public class PercyVisualTest extends BaseTest {
 ---
 
 ## AI-Powered Test Maintenance
+
+> **Section summary:** Use LLMs to analyze test failures and suggest fixes, and to detect flaky test patterns across execution history. This turns reactive debugging into proactive maintenance.
 
 ### Automatic Test Repair
 
@@ -465,6 +507,8 @@ public class FlakyTestAnalyzer {
 ---
 
 ## Predictive Test Selection
+
+> **Section summary:** Running the full regression suite on every commit is wasteful. Predictive selection analyzes code changes and runs only the tests most likely to catch regressions &mdash; cutting CI time by 50-80%.
 
 ### ML-Based Test Prioritization
 
@@ -619,7 +663,7 @@ public class AIEnhancedLoginTest extends BaseTest {
 
 ### 3. Cost Management
 - Cache AI responses for similar queries
-- Use smaller models for simple tasks
+- Use smaller models for simple tasks (GPT-3.5 for data, GPT-4 for analysis)
 - Batch requests to reduce API calls
 
 ### 4. Security
@@ -636,12 +680,21 @@ public class AIEnhancedLoginTest extends BaseTest {
 
 ## Getting Started Checklist
 
-- [ ] Evaluate current test maintenance overhead
+- [ ] Evaluate current test maintenance overhead (hours/week on broken tests)
 - [ ] Choose one AI capability to pilot (recommend: test data generation)
 - [ ] Set up API keys for chosen AI provider
 - [ ] Implement pilot in non-critical test suite
 - [ ] Measure results over 2-4 weeks
-- [ ] Expand to additional AI capabilities
+- [ ] Expand to additional AI capabilities based on ROI
+
+---
+
+## Deep-Dive Guides
+
+For detailed implementation patterns and advanced techniques:
+
+- **[Self-Healing Locators Guide](docs/SELF_HEALING_LOCATORS.md)** &mdash; Healing strategies, Healenium Docker setup, custom AI healers, visual locators, metrics to track
+- **[AI Test Data Generation Guide](docs/AI_TEST_DATA_GENERATION.md)** &mdash; LLM-based generation, privacy-compliant synthetic data, edge case generation, Faker+AI hybrid patterns, cost optimization
 
 ---
 
@@ -654,4 +707,4 @@ public class AIEnhancedLoginTest extends BaseTest {
 
 ---
 
-*This document is part of the QA Automation Hub framework. Contributions welcome!*
+*Contributions welcome &mdash; see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.*
